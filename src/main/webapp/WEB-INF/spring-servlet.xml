@@ -10,19 +10,29 @@
 
     <!-- 启用注解驱动的Spring MVC功能 -->
     <mvc:annotation-driven/>
+    <!-- 拦截器 -->
+    <mvc:interceptors>
+        <bean class="com.phoenix.common.HttpInterceptor"/>
+    </mvc:interceptors>
 
     <!-- 启用包扫描功能 -->
     <context:component-scan base-package="com.phoenix.controller"/>
     <context:component-scan base-package="com.phoenix.service"/>
 
+    <!-- 全局的ApplicationContext工具类 -->
+    <bean class="com.phoenix.utils.ApplicationContextHelper" lazy-init="false"/>
+
     <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
+
+    <!-- 自定义全局异常处理器 -->
+    <bean class="com.phoenix.common.SpringExceptionResolver"/>
 
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
     <!-- Json返回处理-->
     <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
     <!-- jsp返回处理-->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 </beans>
